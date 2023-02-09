@@ -1,20 +1,28 @@
 package sv.gob.bandesal.blog.domain;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonView;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "READER")
-@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Table(name = "READER")
 public class Reader {
 
 	@Id
@@ -26,4 +34,7 @@ public class Reader {
 	@Column(name = "NAME", length = 8, nullable = false)
 	@JsonView
 	String name;
+
+	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<BlogReader> blogs;
 }
