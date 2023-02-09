@@ -35,6 +35,6 @@ public class Reader {
 	@JsonView
 	String name;
 
-	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<BlogReader> blogs;
+	@OneToMany(mappedBy = "reader", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<BlogReader> blogsreaders;
 }
