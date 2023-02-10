@@ -3,10 +3,11 @@ package sv.gob.bandesal.blog.configuration;
 import java.util.Properties;
 
 import javax.naming.NamingException;
-import javax.sql.DataSource;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -14,20 +15,21 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jndi.JndiTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.zaxxer.hikari.HikariDataSource;
+
 import jakarta.persistence.EntityManagerFactory;
 
 @Configuration
 @EnableTransactionManagement
-@Profile("production")
-@PropertySource("classpath:persistence-jndi.properties")
+@Profile("development")
+@PropertySource("classpath:persistence-jdbc.properties")
 @EnableJpaRepositories(basePackages = "sv.gob.bandesal.blog.repository", entityManagerFactoryRef = "bandesalEntityManagerFactory", transactionManagerRef = "bandesalTransactionManager")
-public class PersistenceJNDIConfig {
+public class PersistenceJDBCConfig {
 
 	@Autowired
 	private Environment env;
@@ -51,10 +53,11 @@ public class PersistenceJNDIConfig {
 		return properties;
 	}
 
-	@Bean
-	DataSource dataSource() throws NamingException {
-		return (DataSource) new JndiTemplate().lookup(env.getProperty("db.jndiName"));
-	}
+	@Bean(name = "cegisadatasource")
+    @ConfigurationProperties(prefix = "db.database")
+    public HikariDataSource dataSource() {
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+    }
 
 	@Bean
 	PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
@@ -67,5 +70,4 @@ public class PersistenceJNDIConfig {
 	JdbcTemplate jdbcTemplate() throws NamingException {
 		return new JdbcTemplate(dataSource());
 	}
-
 }
