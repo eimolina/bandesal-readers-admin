@@ -23,8 +23,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "BLOG")
-public class Blog {
+@Table(name = "APPLICATION_USER")
+public class ApplicationUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +32,26 @@ public class Blog {
 	@JsonView
 	private Long id;
 
-	@Column(name = "TITLE", length = 50, nullable = false)
+	@Column(name = "NAME", length = 50, nullable = false)
 	@JsonView
-	private String title;
+	String name;
 
-	@Column(name = "DESCRIPTION", length = 4000, nullable = false)
+	@Column(name = "USERNAME", length = 50, nullable = false)
 	@JsonView
-	private String description;
+	String username;
+
+	@Column(name = "PASSWORD", length = 300, nullable = false)
+	@JsonView
+	String password;
+
+	@Column(name = "SESSIONCODE", length = 50, nullable = true)
+	@JsonView
+	String sessioncode;
 	
-	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<BlogReader> blogsreaders;
+	@Column(name = "STATUS", length = 20, nullable = true)
+	@JsonView
+	String status;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<UserRole> userroles;
 }

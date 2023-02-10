@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,6 +36,6 @@ public class Reader {
 	@JsonView
 	String name;
 
-	@OneToMany(mappedBy = "reader", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "reader", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<BlogReader> blogsreaders;
 }

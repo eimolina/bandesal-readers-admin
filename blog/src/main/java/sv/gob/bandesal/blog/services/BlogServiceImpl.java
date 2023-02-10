@@ -7,7 +7,7 @@ import sv.gob.bandesal.blog.domain.Blog;
 import sv.gob.bandesal.blog.repository.BlogRepository;
 
 @Service
-public class BlogServiceImpl implements BlogService {
+public class BlogServiceImpl implements IBlogService {
 	
 	@Autowired
 	BlogRepository blogRepository;
