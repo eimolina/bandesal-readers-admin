@@ -8,15 +8,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import sv.gob.bandesal.blog.services.IBlogService;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/")
 public class HomeController {
 
 	@Autowired
 	IBlogService blogservice;
 	
-	@GetMapping
+	@GetMapping("/home")
 	public String home() {
 		return "views/home";
+	}
+	
+	@GetMapping("/readers")
+	public String readers() {
+		return "views/readers";
+	}
+	
+	@GetMapping("/blogs")
+	public String blogs() {
+		return "views/blogs";
+	}
+	
+	@GetMapping("/blogsreaders")
+	public String blogsreaders() {
+		return "views/blogsreaders";
 	}
 
 }
