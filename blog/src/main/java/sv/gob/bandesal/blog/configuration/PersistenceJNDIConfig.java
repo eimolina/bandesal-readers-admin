@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import jakarta.persistence.EntityManagerFactory;
 
-@Configuration
+//@Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:persistence-jndi.properties")
 @EnableJpaRepositories(basePackages = "sv.gob.bandesal.blog.repository", entityManagerFactoryRef = "bandesalEntityManagerFactory", transactionManagerRef = "bandesalTransactionManager")
