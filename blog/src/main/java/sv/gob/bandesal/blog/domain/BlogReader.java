@@ -8,6 +8,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
@@ -29,10 +30,12 @@ public class BlogReader {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @MapsId("rid")
+	@JoinColumn(name = "R_ID")
     private Reader reader;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("bid")
+    @JoinColumn(name = "B_ID")
     private Blog blog;
     
     @SuppressWarnings("serial")
@@ -41,7 +44,7 @@ public class BlogReader {
     @AllArgsConstructor
     @Getter
     @Setter
-    public class BlogReaderId implements Serializable {
+    public static class BlogReaderId implements Serializable {
 
     	@Column(name = "R_ID")
     	private Long rid;

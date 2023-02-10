@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
@@ -24,21 +23,13 @@ import sv.gob.bandesal.blog.services.UserServiceImpl;
 public class SecurityConfiguration {
 	
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UserServiceImpl userDetailService;
-
-//	@Bean
-//	public AuthenticationManager authenticationManager() {
-//		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//		authProvider.setUserDetailsService(userDetailService);
-//		authProvider.setPasswordEncoder(getPassWordEncoder());
-//		return new ProviderManager(authProvider);
-//	}
+	UserServiceImpl userDetailService;
 
 	@Bean
-	public AuthenticationProvider authenticationProvider() {
+	AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 		authenticationProvider.setUserDetailsService(userDetailService);
 		authenticationProvider.setPasswordEncoder(passwordEncoder);
@@ -46,7 +37,7 @@ public class SecurityConfiguration {
 	}
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http.csrf().csrfTokenRepository(csrfTokenRepository());
 		http.authorizeHttpRequests().requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/favicon.ico")

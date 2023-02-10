@@ -35,7 +35,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		ApplicationUser user = applicationUserRepository.findByUsernameAndStatus(username);
 		Collection<SimpleGrantedAuthority> authorities = user.getUserroles().stream()
