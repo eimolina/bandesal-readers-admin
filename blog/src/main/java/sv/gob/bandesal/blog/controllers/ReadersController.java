@@ -30,15 +30,15 @@ public class ReadersController {
 	@GetMapping
 	public String readers(Model model, HttpServletRequest request) {
 		model.addAttribute("readers", readerService.getAllReaders());
-		return "views/readers";
+		return "views/reader/readers";
 	}
 
 	@GetMapping(value = "/new")
-	public String newreader(Model model) {
+	public String save(Model model) {
 		if (!model.containsAttribute("reader")) {
 			model.addAttribute("reader", readerService.getEmptyModel());
 		}
-		return "views/newreader";
+		return "views/reader/new-reader";
 	}
 	
 	@PostMapping(value = "/new")
@@ -58,7 +58,7 @@ public class ReadersController {
 	@GetMapping(value = "/{id}")
 	public ModelAndView editreader(@PathVariable(name = "id", required = true) Long id, Model model) {
 		Reader reader = readerService.getReader(id);
-		ModelAndView mav = new ModelAndView("views/newreader");
+		ModelAndView mav = new ModelAndView("views/reader/new-reader");
 		if(reader != null) {
 			mav.addObject("reader", reader);
 			return mav;
@@ -69,7 +69,7 @@ public class ReadersController {
 	@GetMapping(value = "/remove/{id}")
 	public ModelAndView remove(@PathVariable(name = "id", required = true) Long id, Model model) {
 		Reader reader = readerService.getReader(id);
-		ModelAndView mav = new ModelAndView("views/remove-reader");
+		ModelAndView mav = new ModelAndView("views/reader/remove-reader");
 		if(reader != null) {
 			mav.addObject("reader", reader);
 			return mav;
@@ -78,7 +78,7 @@ public class ReadersController {
 	}
 	
 	@PostMapping(value = "/remove")
-	public ModelAndView newreader(@RequestParam(name = "id") Long id) {
+	public ModelAndView remove(@RequestParam(name = "id") Long id) {
 		Reader reader = readerService.getReader(id);
 		if(reader != null) {
 			readerService.removeReader(reader);
