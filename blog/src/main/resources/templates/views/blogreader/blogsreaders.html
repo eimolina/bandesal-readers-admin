@@ -6,7 +6,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
-<title>Blogs</title>
+<title>Admin</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
@@ -23,26 +23,26 @@
 		<div class="row">
 			<nav th:replace="components/sidenav :: side_nav"></nav>
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-				<h2>Lista de blogs</h2>
-				<a th:href="@{/blogs/new}" class="btn btn-bandesal-primary btn-sm mb-3">Agregar nuevo</a>
+				<h2>Lectores por blog</h2>
 				<div class="table-responsive">
-					<table id="tbl-blogs" class="table table-striped table-sm">
+					<table id="tbl-readersporblog" class="table table-striped table-sm">
 						<thead>
 							<tr>
 								<th>#</th>
 								<th>Titulo</th>
 								<th>Descripción</th>
+								<th>Cantidad de lectores</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="blog : ${blogs}">
-								<td th:text="${blog.id}"></td>
-								<td th:text="${blog.title}"></td>
-								<td th:text="${blog.description}"></td>
+							<tr th:each="blogreader : ${blogreaders}">
+								<td th:text="${blogreader.id}"></td>
+								<td th:text="${blogreader.title}"></td>
+								<td th:text="${blogreader.description}"></td>
+								<td th:text="${blogreader.readers}"></td>
 								<td>
-									<a th:href="@{/blogs/{id}(id=${blog.id})}" class="btn btn-success btn-sm">Editar</a>
-									<a th:href="@{/blogs/remove/{id}(id=${blog.id})}" class="btn btn-danger btn-sm">Eliminar</a>
+									<a th:href="@{/blogsreaders/{id}(id=${blogreader.id})}" class="btn btn-success btn-sm">Modificar</a>
 								</td>
 							</tr>
 						</tbody>
@@ -65,7 +65,7 @@
 	<script>
 		feather.replace();
 		$(document).ready(function() {
-			$('#tbl-blogs').DataTable();
+			$('#tbl-readersporblog').DataTable();
 		});
 	</script>
 </body>

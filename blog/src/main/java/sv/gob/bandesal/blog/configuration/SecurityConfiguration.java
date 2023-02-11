@@ -40,7 +40,7 @@ public class SecurityConfiguration {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http.csrf().csrfTokenRepository(csrfTokenRepository());
-		http.authorizeHttpRequests().requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/favicon.ico")
+		http.authorizeHttpRequests().requestMatchers("/css/**", "/js/**", "/img/**", "/vendor/**", "/favicon.ico")
 				.permitAll();
 		http.authorizeHttpRequests((requests) -> requests.anyRequest().authenticated())
 				.formLogin((form) -> form.loginPage("/login").permitAll().defaultSuccessUrl("/home", true))

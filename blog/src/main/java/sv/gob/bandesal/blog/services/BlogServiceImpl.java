@@ -5,7 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import sv.gob.bandesal.blog.domain.Blog;
+import sv.gob.bandesal.blog.dto.BlogReadersDto;
 import sv.gob.bandesal.blog.repository.BlogRepository;
 
 @Service
@@ -39,6 +41,16 @@ public class BlogServiceImpl implements IBlogService {
 	@Override
 	public void removeBlog(Blog blog) {
 		blogRepository.delete(blog);
+	}
+
+	@Override
+	public List<Blog> getBlogsWithoutReaders() {
+		return blogRepository.getBlogsWithoutReaders();
+	}
+
+	@Override
+	public List<BlogReadersDto> getAllBlogReaders() {
+		return blogRepository.getAllGroupByBlogId();
 	}
 
 }

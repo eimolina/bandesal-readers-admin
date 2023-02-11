@@ -7,6 +7,7 @@ import sv.gob.bandesal.blog.domain.Reader;
 public interface IReaderService {
 
 	public List<Reader> getAllReaders();
+	public List<Reader> getAllReadersNotInBlog(Long id);
 	public Reader getEmptyModel();
 	public Reader getReader(Long id);
 	public Reader saveReader(Reader reader);

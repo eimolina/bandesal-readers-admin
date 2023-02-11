@@ -42,4 +42,9 @@ public class ReaderServiceImpl implements IReaderService {
 		readerRepository.delete(reader); 
 	}
 
+	@Override
+	public List<Reader> getAllReadersNotInBlog(Long id) {
+		return readerRepository.getReadersNotInBlog(id);
+	}
+
 }
