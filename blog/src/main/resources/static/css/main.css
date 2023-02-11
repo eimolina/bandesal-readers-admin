@@ -1,0 +1,50 @@
+.btn-bandesal-primary { 
+  color: #ffffff; 
+  background-color: #363D4D; 
+  border-color: #130269; 
+} 
+ 
+.btn-bandesal-primary:hover, 
+.btn-bandesal-primary:focus, 
+.btn-bandesal-primary:active, 
+.btn-bandesal-primary.active, 
+.open .dropdown-toggle.btn-bandesal-primary { 
+  color: #ffffff; 
+  background-color: #29303C; 
+  border-color: #130269; 
+} 
+ 
+.btn-bandesal-primary:active, 
+.btn-bandesal-primary.active, 
+.open .dropdown-toggle.btn-bandesal-primary { 
+  background-image: none; 
+} 
+ 
+.btn-bandesal-primary.disabled, 
+.btn-bandesal-primary[disabled], 
+fieldset[disabled] .btn-bandesal-primary, 
+.btn-bandesal-primary.disabled:hover, 
+.btn-bandesal-primary[disabled]:hover, 
+fieldset[disabled] .btn-bandesal-primary:hover, 
+.btn-bandesal-primary.disabled:focus, 
+.btn-bandesal-primary[disabled]:focus, 
+fieldset[disabled] .btn-bandesal-primary:focus, 
+.btn-bandesal-primary.disabled:active, 
+.btn-bandesal-primary[disabled]:active, 
+fieldset[disabled] .btn-bandesal-primary:active, 
+.btn-bandesal-primary.disabled.active, 
+.btn-bandesal-primary[disabled].active, 
+fieldset[disabled] .btn-bandesal-primary.active { 
+  background-color: #363D4D; 
+  border-color: #130269; 
+} 
+ 
+.btn-bandesal-primary .badge { 
+  color: #363D4D; 
+  background-color: #ffffff; 
+}
+
+.errorlist{
+	list-style: none;
+	padding: 0;
+}

@@ -23,7 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "BLOG")
+@Table(name = "BLOGS")
 public class Blog {
 
 	@Id
@@ -40,6 +40,6 @@ public class Blog {
 	@JsonView
 	private String description;
 	
-	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BlogReader> blogsreaders;
 }

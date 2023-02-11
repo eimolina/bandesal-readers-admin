@@ -59,14 +59,14 @@ public class PersistenceJDBCConfig {
         return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
-	@Bean
+	@Bean(name = "bandesalTransactionManager")
 	PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(emf);
 		return transactionManager;
 	}
 
-	@Bean
+	@Bean(name = "jdbcTemplaceBandesal")
 	JdbcTemplate jdbcTemplate() throws NamingException {
 		return new JdbcTemplate(dataSource());
 	}

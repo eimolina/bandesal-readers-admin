@@ -56,14 +56,14 @@ public class PersistenceJNDIConfig {
 		return (DataSource) new JndiTemplate().lookup(env.getProperty("db.jndiName"));
 	}
 
-	@Bean
+	@Bean(name = "bandesalTransactionManager")
 	PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(emf);
 		return transactionManager;
 	}
 
-	@Bean
+	@Bean(name = "jdbcTemplaceBandesal")
 	JdbcTemplate jdbcTemplate() throws NamingException {
 		return new JdbcTemplate(dataSource());
 	}
