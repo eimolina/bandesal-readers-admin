@@ -44,7 +44,7 @@ public class SecurityConfiguration {
 				.permitAll();
 		http.authorizeHttpRequests((requests) -> requests.anyRequest().authenticated())
 				.formLogin((form) -> form.loginPage("/login").permitAll().defaultSuccessUrl("/home", true))
-				.logout((logout) -> logout.permitAll().logoutSuccessUrl("/login").deleteCookies("JSESSIONID"))
+				.logout((logout) -> logout.logoutUrl("/logout").permitAll().logoutSuccessUrl("/login").deleteCookies("JSESSIONID"))
 				.rememberMe((remember_me) -> remember_me.key("61a2f34b98a46a3bac901b34fa8e41d7"))
 				.authenticationProvider(authenticationProvider());
 
