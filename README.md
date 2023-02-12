@@ -3,18 +3,16 @@
 ## Desarrollo
 Modifica el archivo *application.properties* de la siguiente manera
 ```bash
-profile.active=development
+spring.profiles.active=development
 ```
-
-
 ## Despliegue
 Modifica el archivo *application.properties* de la siguiente manera
 ```bash
-profile.active=production
+spring.profiles.active=production
 ```
 Genera el war ejecutando el siguiente comando en el proyecto *blog*
 ```bash
-  mvn package
+mvn package
 ```
 ## Contribución
 
