@@ -55,7 +55,7 @@ public class PersistenceJDBCConfig {
 
 	@Bean(name = "cegisadatasource")
     @ConfigurationProperties(prefix = "db.database")
-    public HikariDataSource dataSource() {
+    HikariDataSource dataSource() {
         return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 

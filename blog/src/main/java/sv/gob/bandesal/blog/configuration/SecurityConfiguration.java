@@ -49,7 +49,7 @@ public class SecurityConfiguration {
 		private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
 		@Bean
-		public AuthenticationEntryPoint authenticationEntryPoint() {
+		AuthenticationEntryPoint authenticationEntryPoint() {
 			return new JwtAuthenticationEntryPoint();
 		}
 
