@@ -21,7 +21,7 @@ import sv.gob.bandesal.blog.domain.Reader;
 import sv.gob.bandesal.blog.services.IReaderService;
 
 @Controller
-@RequestMapping("/readers")
+@RequestMapping("/central/readers")
 public class ReadersController {
 
 	@Autowired
@@ -82,7 +82,7 @@ public class ReadersController {
 		Reader reader = readerService.getReader(id);
 		if(reader != null) {
 			readerService.removeReader(reader);
-			return new ModelAndView("redirect:/readers");
+			return new ModelAndView("redirect:/central/readers");
 		}
 		throw new ResponseStatusException(HttpStatusCode.valueOf(400), "Unable to find resource");
 	}

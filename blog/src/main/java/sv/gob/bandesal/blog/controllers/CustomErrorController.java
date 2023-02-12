@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class CustomErrorController implements ErrorController  {
 	
-	@GetMapping("/error")
+	@GetMapping("/central/error")
 	public String handleError(HttpServletRequest request) {
 	    Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 	    

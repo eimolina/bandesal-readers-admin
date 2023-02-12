@@ -3,17 +3,22 @@ package sv.gob.bandesal.blog.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 import lombok.RequiredArgsConstructor;
+import sv.gob.bandesal.blog.security.JwtAuthenticationFilter;
+import sv.gob.bandesal.blog.security.JwtAuthorizationFilter;
 import sv.gob.bandesal.blog.services.UserServiceImpl;
 
 @Configuration
@@ -29,31 +34,58 @@ public class SecurityConfiguration {
 	UserServiceImpl userDetailService;
 
 	@Bean
-	AuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setUserDetailsService(userDetailService);
-		authenticationProvider.setPasswordEncoder(passwordEncoder);
-		return authenticationProvider;
+	AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+		return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailService)
+				.passwordEncoder(passwordEncoder).and().build();
 	}
 
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	@Configuration
+	@RequiredArgsConstructor
+	@Order(1)
+	public static class JwtConfigurationAdapter  {
 
-		http.csrf().csrfTokenRepository(csrfTokenRepository());
-		http.authorizeHttpRequests().requestMatchers("/css/**", "/js/**", "/img/**", "/vendor/**", "/favicon.ico")
-				.permitAll();
-		http.authorizeHttpRequests((requests) -> requests.anyRequest().authenticated())
-				.formLogin((form) -> form.loginPage("/login").permitAll().defaultSuccessUrl("/home", true))
-				.logout((logout) -> logout.logoutUrl("/logout").permitAll().logoutSuccessUrl("/login").deleteCookies("JSESSIONID"))
-				.rememberMe((remember_me) -> remember_me.key("61a2f34b98a46a3bac901b34fa8e41d7"))
-				.authenticationProvider(authenticationProvider());
+		private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
-		return http.build();
+		@Bean
+		SecurityFilterChain securityFilterChain1(HttpSecurity http, AuthenticationManager authManager)
+				throws Exception {
+			JwtAuthenticationFilter JwtAuthenticationFilter = new JwtAuthenticationFilter();
+			JwtAuthenticationFilter.setAuthenticationManager(authManager);
+			JwtAuthenticationFilter.setFilterProcessesUrl("/api/v1/auth");
+			
+			http.csrf().disable().securityMatcher("/api/**").authorizeHttpRequests()
+					.requestMatchers("/api/**").authenticated().and().httpBasic().and().sessionManagement()
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().addFilter(JwtAuthenticationFilter)
+					.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+			return http.build();
+		}
 	}
 
-	private CsrfTokenRepository csrfTokenRepository() {
-		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-		repository.setHeaderName("X-XSRF-TOKEN");
-		return repository;
+	@Configuration
+	@Order(2)
+	public static class FormConfigurationAdapter {
+		
+		@Bean
+		SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception {
+			
+			http.csrf().csrfTokenRepository(csrfTokenRepository()).and().securityMatcher("/central/**")
+				.exceptionHandling().and().authorizeHttpRequests(
+					(requests) -> requests
+							.requestMatchers("/css/**", "/js/**", "/img/**", "/vendor/**", "/error",
+									"/favicon.ico")
+							.permitAll().requestMatchers("/**").authenticated())
+					.formLogin((form) -> form.loginPage("/central/login").defaultSuccessUrl("/central/home"))
+					.logout((logout) -> logout.logoutUrl("/central/logout").permitAll()
+							.logoutSuccessUrl("/central/login").deleteCookies("JSESSIONID"))
+					.rememberMe((remember_me) -> remember_me.key("61a2f34b98a46a3bac901b34fa8e41d7"));
+			return http.build();
+		}
+
+		private CsrfTokenRepository csrfTokenRepository() {
+			HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+			repository.setHeaderName("X-XSRF-TOKEN");
+			return repository;
+		}
 	}
+
 }

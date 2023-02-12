@@ -21,7 +21,7 @@ import sv.gob.bandesal.blog.domain.Blog;
 import sv.gob.bandesal.blog.services.IBlogService;
 
 @Controller
-@RequestMapping("/blogs")
+@RequestMapping("/central/blogs")
 public class BlogsController {
 
 	@Autowired
@@ -82,7 +82,7 @@ public class BlogsController {
 		Blog blog = blogservice.getBlog(id);
 		if(blog != null) {
 			blogservice.removeBlog(blog);
-			return new ModelAndView("redirect:/blogs");
+			return new ModelAndView("redirect:/central/blogs");
 		}
 		throw new ResponseStatusException(HttpStatusCode.valueOf(400), "Unable to find resource");
 	}

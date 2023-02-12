@@ -24,7 +24,7 @@ import sv.gob.bandesal.blog.services.IBlogService;
 import sv.gob.bandesal.blog.services.IReaderService;
 
 @Controller
-@RequestMapping("/blogsreaders")
+@RequestMapping("/central/blogsreaders")
 public class BlogReadersController {
 
 	@Autowired
@@ -65,7 +65,7 @@ public class BlogReadersController {
 			emmbebedId.setRid(data.getReader().getId());
 			data.setId(emmbebedId);
 			blogReaderService.saveBlogReader(data);
-			return new ModelAndView("redirect:/blogsreaders/" + data.getBlog().getId());
+			return new ModelAndView("redirect:/central/blogsreaders/" + data.getBlog().getId());
 		}
 		throw new ResponseStatusException(HttpStatusCode.valueOf(400), "Unable to find resource");
 	}
@@ -79,7 +79,7 @@ public class BlogReadersController {
 			emmbebedId.setRid(data.getReader().getId());
 			data.setId(emmbebedId);
 			blogReaderService.removeBlogReader(data);
-			return new ModelAndView("redirect:/blogsreaders/" + data.getBlog().getId());
+			return new ModelAndView("redirect:/central/blogsreaders/" + data.getBlog().getId());
 		}
 		throw new ResponseStatusException(HttpStatusCode.valueOf(400), "Unable to find resource");
 	}
