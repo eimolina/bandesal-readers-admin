@@ -77,9 +77,8 @@ public class SecurityConfiguration {
 		SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception {
 
 			http.csrf().csrfTokenRepository(csrfTokenRepository()).and().securityMatcher("/central/**")
-					.exceptionHandling().and()
 					.authorizeHttpRequests((requests) -> requests
-							.requestMatchers("/css/**", "/js/**", "/img/**", "/vendor/**", "/error", "/favicon.ico")
+							.requestMatchers("/css/**", "/js/**", "/img/**", "/vendor/**", "/central/error", "/favicon.ico")
 							.permitAll().requestMatchers("/**").authenticated())
 					.formLogin((form) -> form.loginPage("/central/login").defaultSuccessUrl("/central/home"))
 					.logout((logout) -> logout.logoutUrl("/central/logout").permitAll()
